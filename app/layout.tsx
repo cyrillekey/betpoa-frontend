@@ -5,7 +5,10 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Image from "next/image";
 import { useState } from "react";
+import {Hide} from '@chakra-ui/react'
 
+import { usePathname } from "next/navigation";
+import { Link } from "@chakra-ui/next-js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +18,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  const pathname = (usePathname())
   const [navOpen,setNavOpen] = useState(false)
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
           <div className="layout" id="app">
+            <Hide below="lg">
             <header className="nav__top">
               <nav className="nav__top__item main-navigation">
                 <ul className="nav">
@@ -77,6 +83,7 @@ export default function RootLayout({
                 </div>
               </div>
             </header>
+            </Hide>
             <div className={`nav__left ${navOpen ? 'opened': ''}`}>
               <div className="nav__left__item nav__left__toggle">
                 <button className="btn btn--icon btn--no-bg" onClick={()=>setNavOpen(!navOpen)}>
@@ -93,7 +100,7 @@ export default function RootLayout({
                 <div className="nav__left__item">
                   <ul className="nav nav--vertical">
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/" && 'active'}`} href="/">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -101,7 +108,7 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Feed</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="#">
@@ -130,7 +137,7 @@ export default function RootLayout({
                 <div className="nav__left__item">
                   <ul className="nav nav--vertical">
                     <li className="nav-item">
-                      <a className="nav-link active" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/football" && 'active'}`} href="/markets/football">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -138,7 +145,7 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Football</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="#">

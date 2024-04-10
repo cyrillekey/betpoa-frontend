@@ -1,8 +1,18 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Fragment } from "react";
+import PopularLeagues from "@/components/PopularLeague";
+import FeaturedMatch from "@/components/FeaturedMatch";
+import FeaturedMatches from "@/components/FeaturedMatches";
 
 export default function Home() {
   return (
-    <p>Hello workd</p>
+    <Fragment>
+      <div className="col-left">
+      <FeaturedMatch />
+      <PopularLeagues />
+      </div>
+      <div className="col-right">
+        <FeaturedMatches />
+      </div>
+    </Fragment>
   );
 }

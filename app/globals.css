@@ -495,10 +495,10 @@ body {
 .score__loser {
   color: #a3a9b0;
 }
-
 .league {
   display: flex;
   align-items: center;
+  
 }
 .league__logo {
   width: 35px;
