@@ -240,7 +240,9 @@ export default function RootLayout({
                 </svg>
               </button>
             </div>
+            <main className="dashboard">
             {children}
+            </main>
           </div>
         </Providers>
       </body>
