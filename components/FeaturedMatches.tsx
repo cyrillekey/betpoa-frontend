@@ -1,6 +1,12 @@
+"use client"
+import { useGetFixturesQuery } from "@/hooks"
+import { Image } from "@chakra-ui/next-js"
 import { Fragment } from "react"
+import dayjs from 'dayjs'
 
 const FeaturedMatches = () => {
+  const {data:fixturesResponse} = useGetFixturesQuery({pageSize: 100})
+  const fixtures = fixturesResponse ?? []
     return <Fragment><section className="matches">
     <h2>
       Matches<button className="btn btn--no-bg btn--icon btn--round-lg" type="button"><svg style={{width:'24px',height:'24px'}} viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" /></svg></button>
@@ -47,187 +53,40 @@ const FeaturedMatches = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody>                        
+            {
+              fixtures?.map((a:any)=><tr key={a?.id}>
               <td>
-                <span className="matches__time matches__time--live">8:00</span><span className="tag tag--red tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="currentColor" cx="4" cy="4" r="4"/></svg>Live</span>
+              <span className="matches__time matches__time--live">{dayjs().isBefore(dayjs(a.date).add(90,'minutes')) && dayjs(a?.date).isAfter() ? 'LIVE' : dayjs(a?.date).format('HH:mm')}</span><span className="tag tag--red tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="currentColor" cx="4" cy="4" r="4"/></svg>Live</span>              
               </td>
               <td>
                 <div className="score score--vertical">
                   <div className="score__team score__team--vertical">
-                    <span>Real Valladolid</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/HlIrXZRP96tv0H1uiiN0Jg_48x48.png" />
-                  </div>
-                  <p className="score__result score__result--vertical">
-                    <span className="score__goals">3</span><span className="score__separator">:</span><span className="score__goals">2</span>
-                  </p>
-                  <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/WKH7Ak5cYD6Qm1EEqXzmVw_48x48.png" /><span>Villareal</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span className="tag tag--green rating rating--up">1.63</span>
-              </td>
-              <td>
-                <span className="tag rating">2.13</span>
-              </td>
-              <td>
-                <span className="tag rating">1.82</span>
-              </td>
-              <td>
-                <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span className="matches__time matches__time--live">9:30</span><span className="tag tag--red tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="currentColor" cx="4" cy="4" r="4"/></svg>Live</span>
-              </td>
-              <td>
-                <div className="score score--vertical">
-                  <div className="score__team score__team--vertical">
-                    <span>Qarabag FK</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/k-Mu0SCwDQG4SFQBxmettA_48x48.png" />
-                  </div>
-                  <p className="score__result score__result--vertical">
-                    <span className="score__goals">1</span><span className="score__separator">:</span><span className="score__goals">0</span>
-                  </p>
-                  <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/RnYaRw_k05CV-qhVouSEMA_48x48.png" /><span>NK Maribor</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span className="tag tag--green rating rating--up">1.22</span>
-              </td>
-              <td>
-                <span className="tag rating">1.74</span>
-              </td>
-              <td>
-                <span className="tag tag--red rating rating--down">2.55</span>
-              </td>
-              <td>
-                <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span className="matches__time">10:45</span><span className="tag tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="#613cea" cx="4" cy="4" r="4"/></svg>Today</span>
-              </td>
-              <td>
-                <div className="score score--vertical">
-                  <div className="score__team score__team--vertical">
-                    <span>Arsenal</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/4us2nCgl6kgZc0t3hpW75Q_48x48.png" />
+                    <span>{a?.homeTeam?.name}</span><Image alt="" src={{width: 100,height: 100,src: a?.homeTeam?.logo}} />
                   </div>
                   <p className="score__result score__result--vertical score__result--not-started">
-                    <span className="score__goals">-</span><span className="score__separator">:</span><span className="score__goals">-</span>
+                    <span className="score__goals">{a?.result?.homeGoals ? a?.result?.homeGoals : '-'}</span><span className="score__separator">:</span><span className="score__goals">{a?.result?.awayGoals ? a?.result?.awayGoals : '-'}</span>
                   </p>
                   <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/fhBITrIlbQxhVB6IjxUO6Q_48x48.png" /><span>Chelsea</span>
+                    <Image alt="" src={{width:48,height: 48,src: a?.awayTeam?.logo}} /><span>{a?.awayTeam?.name}</span>
                   </div>
                 </div>
               </td>
               <td>
-                <span className="tag rating">5.37</span>
+                <span className="tag tag--green rating rating--up">{Number(a?.odds?.find((a:any)=>(a?.name).toLowerCase() == "home")?.odd).toFixed(2)}</span>
               </td>
               <td>
-                <span className="tag rating">1.10</span>
+                <span className="tag rating">{Number(a?.odds?.find((a:any)=>(a?.name).toLowerCase() == "draw")?.odd).toFixed(2)}</span>
               </td>
               <td>
-                <span className="tag rating">1.86</span>
-              </td>
-              <td>
-                <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span className="matches__time">12:00</span><span className="tag tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="#efefef" cx="4" cy="4" r="4"/></svg>Canceled</span>
-              </td>
-              <td>
-                <div className="score score--vertical">
-                  <div className="score__team score__team--vertical">
-                    <span>Everton</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/C3J47ea36cMBc4XPbp9aaA_48x48.png" />
-                  </div>
-                  <p className="score__result score__result--vertical score__result--not-started">
-                    <span className="score__goals">-</span><span className="score__separator">:</span><span className="score__goals">-</span>
-                  </p>
-                  <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/0iShHhASp5q1SL4JhtwJiw_48x48.png" /><span>Liverpool</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span className="tag tag--green rating rating--up">1.63</span>
-              </td>
-              <td>
-                <span className="tag rating">2.13</span>
-              </td>
-              <td>
-                <span className="tag tag--red rating rating--down">1.82</span>
+                <span className="tag tag--red rating rating--down">{Number(a?.odds?.find((a:any)=>(a?.name).toLowerCase() == "away")?.odd).toFixed(2)}</span>
               </td>
               <td>
                 <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
               </td>
-            </tr>
-            <tr>
-              <td>
-                <span className="matches__time"> -- : -- </span><span className="tag tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="orange" cx="4" cy="4" r="4"/></svg>Completed</span>
-              </td>
-              <td>
-                <div className="score score--vertical">
-                  <div className="score__team score__team--vertical">
-                    <span>Villareal</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/WKH7Ak5cYD6Qm1EEqXzmVw_48x48.png" />
-                  </div>
-                  <p className="score__result score__result--vertical score__result--not-started">
-                    <span className="score__goals">-</span><span className="score__separator">:</span><span className="score__goals">-</span>
-                  </p>
-                  <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/RnYaRw_k05CV-qhVouSEMA_48x48.png" /><span>NK Maribor</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span className="tag tag--green rating rating--up">1.63</span>
-              </td>
-              <td>
-                <span className="tag rating">2.13</span>
-              </td>
-              <td>
-                <span className="tag tag--red rating rating--down">1.82</span>
-              </td>
-              <td>
-                <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span className="matches__time">12:20</span><span className="tag tag--icon"><svg width="6" height="6" viewBox="0 0 8 8"><circle fill="#613cea" cx="4" cy="4" r="4"/></svg>Today</span>
-              </td>
-              <td>
-                <div className="score score--vertical">
-                  <div className="score__team score__team--vertical">
-                    <span>Girona FC</span><img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/Tyy5rCdiLCw2_8z04DM-GQ_48x48.png" />
-                  </div>
-                  <p className="score__result score__result--vertical score__result--not-started">
-                    <span className="score__goals">-</span><span className="score__separator">:</span><span className="score__goals">-</span>
-                  </p>
-                  <div className="score__team score__team--vertical">
-                    <img alt="" src="https://ssl.gstatic.com/onebox/media/sports/logos/Th4fAVAZeCJWRcKoLW7koA_48x48.png" /><span>Real Madrid</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span className="tag tag--green rating rating--up">1.63</span>
-              </td>
-              <td>
-                <span className="tag rating">2.13</span>
-              </td>
-              <td>
-                <span className="tag tag--red rating rating--down">1.82</span>
-              </td>
-              <td>
-                <a className="matches__stats btn btn--icon"><span className="sr-only">Stats</span><svg width="24" height="24" viewBox="0 0 24 24"> <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" /> </svg></a>
-              </td>
-            </tr>
+            </tr>)
+            }                                    
+            
           </tbody>
         </table>
       </div>
