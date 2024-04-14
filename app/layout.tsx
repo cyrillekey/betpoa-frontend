@@ -88,6 +88,7 @@ export default function RootLayout({
               </div>
             </header>
             </Hide>
+            <Hide below="md">
             <div className={`nav__left ${sideBarColapsed ? 'opened': ''}`}>
               <div className="nav__left__item nav__left__toggle">
                 <button className="btn btn--icon btn--no-bg" onClick={toggleSideBar}>
@@ -251,6 +252,7 @@ export default function RootLayout({
                 </svg>
               </button>
             </div>
+            </Hide>
             <main className="dashboard">
             {children}            
             </main>        
