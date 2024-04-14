@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false}/>
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
         <ChakraProvider>{children}</ChakraProvider>
     </QueryClientProvider>
   );

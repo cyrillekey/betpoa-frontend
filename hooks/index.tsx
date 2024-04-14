@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useGetLeaguesQuery = ({
@@ -14,8 +14,8 @@ export const useGetLeaguesQuery = ({
 }) => {
   return useQuery({
     queryKey: ["getLeagues"],
-    queryFn: () => {
-      return axios
+    queryFn: () =>
+      axios
         .request({
           method: "GET",
           url: "https://walrus-app-24qv2.ondigitalocean.app/leagues",
@@ -31,45 +31,45 @@ export const useGetLeaguesQuery = ({
         })
         .catch((err) => {
           return err?.response?.data?.data ?? [];
-        });
-    },
+        }),
   });
 };
 export const useGetFixturesQuery = ({
   pageSize = 5,
-  page = 1,
   country,
   status,
   fromDate,
-  toDate
+  toDate,
 }: {
   pageSize?: number;
-  page?: number;
   country?: string;
   status?: string;
-  fromDate?: string,
-  toDate?: string
+  fromDate?: string;
+  toDate?: string;
 }) => {
-  return useQuery({
+  return useInfiniteQuery({
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: any[], pages) =>
+      lastPage.length > 0 ? pages.length + 1 : undefined,
     queryKey: ["getFixtures"],
-    queryFn: () =>
+    queryFn: ({ pageParam }) =>
       axios
         .request({
           method: "GET",
           url: "https://walrus-app-24qv2.ondigitalocean.app/fixtures",
           params: {
             pageSize,
-            page,
+            page: pageParam,
             country,
             status,
             fromDate,
-            toDate
+            toDate,
           },
         })
         .then((resp) => resp?.data?.data as [])
         .catch((err) => {
-            console.log(err?.response)
-            return err?.response?.data?.data ?? [];
+          console.log(err?.response);
+          return err?.response?.data?.data ?? [];
         }),
   });
 };
