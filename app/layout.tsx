@@ -35,30 +35,30 @@ export default function RootLayout({
               <nav className="nav__top__item main-navigation">
                 <ul className="nav">
                   <li className="nav-item">
-                    <a className="nav-link active" href="">
+                    <Link className={`nav-link ${pathname == "/" &&  'active'}`} href="/">
                       {" "}
                       Matches
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="">
+                    <Link className={`nav-link ${pathname == "/livescore" &&  'active'}`} href={"/livescore"}>
                       Live Score
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="">
+                    <Link className={`nav-link ${pathname == "/statistics" &&  'active'}`} href="/statistics">
                       Statistics
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="">
+                    <Link className={`nav-link ${pathname == "/analytics" &&  'active'}`} href="/analytics">
                       Analitics
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="">
+                    <Link className={`nav-link ${pathname == "/forecast" &&  'active'}`} href="/forecast">
                       Forecasts
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -115,7 +115,7 @@ export default function RootLayout({
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/videos" && 'active'}`} href="/videos">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -123,10 +123,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Videos</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/favourites" && 'active'}`} href="/favourites">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -134,7 +134,7 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Favourites</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -152,7 +152,7 @@ export default function RootLayout({
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/rugby" && 'active'}`} href="/markets/rugby">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -160,10 +160,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Rugby</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/badminton" && 'active'}`} href="/markets/badminton">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -171,10 +171,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Badminton</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/volleyball" && 'active'}`} href="/markets/volleyball">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -182,10 +182,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Volleyball</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/tabletennis" && 'active'}`} href="/markets/tabletennis">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -193,10 +193,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Table Tennis</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/esports" && 'active'}`} href="/markets/esports">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -204,10 +204,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>E-sport</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/archery" && 'active'}`} href="/markets/archery">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -215,10 +215,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Archery</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/handball" && 'active'}`} href="/markets/handball">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -226,10 +226,10 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Handball</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">
+                      <Link className={`nav-link ${pathname == "/markets/basketball" && 'active'}`} href="/markets/basketball">
                         <svg viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
@@ -237,7 +237,7 @@ export default function RootLayout({
                           />
                         </svg>
                         <span>Basketball</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
