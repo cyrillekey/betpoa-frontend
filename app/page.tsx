@@ -12,7 +12,7 @@ export default function Home() {
       </div>
       <div className="col-right">
         <FeaturedMatches />
-      </div>
+      </div>         
     </Fragment>
   );
 }

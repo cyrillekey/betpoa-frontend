@@ -923,13 +923,13 @@ input[type=checkbox]:checked+.checkbox::after {
   grid-area: invoice;
   background-color: #f3f5f9;
   font-size: 0.875rem;
-  width: 0;
+  width: 23rem;
   overflow: hidden;
   transition: width 0.3s;
 }
 
 .invoice__wrapper {
-  width: 20rem;
+  width: 23rem;
   padding: 1.2rem 1.5rem 2.5rem;
   border-left: 1px solid #efefef;
   transform: translate(0, 0);

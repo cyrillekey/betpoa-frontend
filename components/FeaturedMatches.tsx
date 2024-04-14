@@ -90,6 +90,11 @@ const BetLine = ({ a }: { a: any }) => {
             addOdd({
               fixtureId: a?.id,
               oddId: homeOdd?.id,
+              homeTeam: a?.homeTeam?.name,              
+              awayTeam: a?.awayTeam?.name,
+              market: 'WINNER',
+              odd: homeOdd?.odd,
+              pick: a?.homeTeam?.name
             })
           }
         >
@@ -105,6 +110,11 @@ const BetLine = ({ a }: { a: any }) => {
             addOdd({
               fixtureId: a?.id,
               oddId: drawOdd?.id,
+              homeTeam: a?.homeTeam?.name,
+              awayTeam: a?.awayTeam?.name,
+              market: 'WINNER',
+              odd: drawOdd?.odd,
+              pick: 'DRAW',
             })
           }
         >
@@ -120,6 +130,11 @@ const BetLine = ({ a }: { a: any }) => {
             addOdd({
               fixtureId: a?.id,
               oddId: awayOdd?.id,
+              homeTeam: a?.homeTeam?.name,
+              awayTeam: a?.awayTeam?.name,
+              market: 'WINNER',
+              odd: awayOdd?.odd,
+              pick: a?.awayTeam?.name,
             })
           }
         >

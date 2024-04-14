@@ -1,14 +1,17 @@
 "use client"
-import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Image from "next/image";
-import { useState } from "react";
+import 'nprogress/nprogress.css'
 import {Hide} from '@chakra-ui/react'
-
 import { usePathname } from "next/navigation";
 import { Link } from "@chakra-ui/next-js";
+import { SideBarBetSlip } from "@/components/SideBarBetSlip";
+import { useAppStateStore } from "@/state/app.state";
+import { Router } from "next/router";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +21,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+ 
+
   const pathname = (usePathname())
-  const [navOpen,setNavOpen] = useState(false)
+  const {sideBarColapsed,toggleSideBar,toggleBetSlip} = useAppStateStore()
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -84,9 +88,9 @@ export default function RootLayout({
               </div>
             </header>
             </Hide>
-            <div className={`nav__left ${navOpen ? 'opened': ''}`}>
+            <div className={`nav__left ${sideBarColapsed ? 'opened': ''}`}>
               <div className="nav__left__item nav__left__toggle">
-                <button className="btn btn--icon btn--no-bg" onClick={()=>setNavOpen(!navOpen)}>
+                <button className="btn btn--icon btn--no-bg" onClick={toggleSideBar}>
                   <span className="sr-only">Toggle navbar</span>
                   <svg viewBox="0 0 24 24">
                     <path
@@ -96,7 +100,7 @@ export default function RootLayout({
                   </svg>
                 </button>
               </div>
-              <nav className={`secondary-navigation ${navOpen ? 'opened': ''}`}>
+              <nav className={`secondary-navigation ${sideBarColapsed ? 'opened': ''}`}>
                 <div className="nav__left__item">
                   <ul className="nav nav--vertical">
                     <li className="nav-item">
@@ -238,7 +242,7 @@ export default function RootLayout({
                   </ul>
                 </div>
               </nav>
-              <button className="btn btn--icon btn--primary btn--round-lg btn--add">
+              <button className="btn btn--icon btn--primary btn--round-lg btn--add" onClick={toggleBetSlip}>
                 <svg viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -248,8 +252,9 @@ export default function RootLayout({
               </button>
             </div>
             <main className="dashboard">
-            {children}
-            </main>
+            {children}            
+            </main>        
+            <SideBarBetSlip />    
           </div>
         </Providers>
       </body>
