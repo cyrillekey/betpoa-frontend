@@ -1,11 +1,11 @@
 "use client";
 import { useGetFixturesQuery } from "@/hooks";
 import { Image } from "@chakra-ui/next-js";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
 import { useBettingStore } from "@/state/betting.state";
-import { v4 } from "uuid";
+import { v4, v5 } from "uuid";
 
 dayjs.extend(calendar);
 const BetLine = ({ a }: { a: any }) => {
@@ -140,9 +140,7 @@ const BetLine = ({ a }: { a: any }) => {
 };
 const BetLineLoading = () => {
   return (
-    <tr
-      className="shimmer-effect"
-    >
+    <tr className="shimmer-effect">
       <td>
         <span className="matches__time matches__time--live">--:--</span>
 
@@ -206,9 +204,33 @@ const BetLineLoading = () => {
   );
 };
 const FeaturedMatches = () => {
-  const { data: fixturesResponse, isLoading } = useGetFixturesQuery({
-    pageSize: 100,
+  const {
+    data: fixturesResponse,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetFixturesQuery({
+    pageSize: 10,
   });
+  const observerTarget = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1 }
+    );
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [observerTarget]);
 
   const fixtures = fixturesResponse?.pages.flat() ?? [];
   return (
@@ -273,10 +295,23 @@ const FeaturedMatches = () => {
               </thead>
               <tbody>
                 {isLoading
-                  ? new Array(8)
+                  ? new Array(14)
                       .fill("")
                       .map((a) => <BetLineLoading key={v4()} />)
                   : fixtures.map((a: any) => <BetLine a={a} key={v4()} />)}
+                {isLoading ? (
+                  <Fragment></Fragment>
+                ) : isFetchingNextPage ? (
+                  new Array(2)
+                    .fill("")
+                    .map((a) => <BetLineLoading key={v4()} />)
+                ) : (
+                  <tr ref={observerTarget}>
+                    <td colSpan={6} style={{ textAlign: "center" }} onClick={()=>fetchNextPage()}>
+                      Fetch More
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

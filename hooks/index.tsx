@@ -50,26 +50,31 @@ export const useGetFixturesQuery = ({
   return useInfiniteQuery({
     initialPageParam: 0,
     getNextPageParam: (lastPage: any[], pages) =>
-      lastPage.length > 0 ? pages.length + 1 : undefined,
+      {
+        
+        return lastPage.length > 0 ? (pages.length - 1) + 1 : undefined;
+      },
     queryKey: ["getFixtures"],
     queryFn: ({ pageParam }) =>
-      axios
-        .request({
-          method: "GET",
-          url: "https://walrus-app-24qv2.ondigitalocean.app/fixtures",
-          params: {
-            pageSize,
-            page: pageParam,
-            country,
-            status,
-            fromDate,
-            toDate,
-          },
-        })
-        .then((resp) => resp?.data?.data as [])
-        .catch((err) => {
-          console.log(err?.response);
-          return err?.response?.data?.data ?? [];
-        }),
+      {       
+        return axios
+          .request({
+            method: "GET",
+            url: "https://walrus-app-24qv2.ondigitalocean.app/fixtures",
+            params: {
+              pageSize,
+              page: pageParam,
+              country,
+              status,
+              fromDate,
+              toDate,
+            },
+          })
+          .then((resp) => resp?.data?.data as [])
+          .catch((err) => {
+            console.log(err?.response);
+            return err?.response?.data?.data ?? [];
+          });
+      },
   });
 };
