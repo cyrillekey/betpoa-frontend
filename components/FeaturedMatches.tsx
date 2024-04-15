@@ -60,12 +60,12 @@ const BetLine = ({ a }: { a: any }) => {
             />
           </div>
           <p className="score__result score__result--vertical score__result--not-started">
-            <span className="score__goals">
-              {a?.result?.homeGoals ? a?.result?.homeGoals : "-"}
+            <span className="score__goals">              
+              {a?.result?.htHomeGoals !=null && a?.result?.homeGoals == null ? a?.result?.htHomeGoals : a?.result?.homeGoals != null  ? a?.result?.homeGoals  : "-"}
             </span>
             <span className="score__separator">:</span>
             <span className="score__goals">
-              {a?.result?.awayGoals ? a?.result?.awayGoals : "-"}
+            {a?.result?.htAwayGoals != null && a?.result?.awayGoals == null ? a?.result?.htAwayGoals : a?.result?.awayGoals != null ? a?.result?.awayGoals  : "-"}
             </span>
           </p>
           <div className="score__team score__team--vertical">
