@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+axios.defaults.baseURL = process.env.NEXT_API_BASE_URL!
+console.log(process.env.NEXT_API_BASE_URL)
 export const useGetLeaguesQuery = ({
   pageSize = 5,
   page = 1,
@@ -18,7 +19,7 @@ export const useGetLeaguesQuery = ({
       axios
         .request({
           method: "GET",
-          url: "https://walrus-app-24qv2.ondigitalocean.app/leagues",
+          url: "/leagues",
           params: {
             pageSize,
             country,
@@ -60,7 +61,7 @@ export const useGetFixturesQuery = ({
         return axios
           .request({
             method: "GET",
-            url: "https://walrus-app-24qv2.ondigitalocean.app/fixtures",
+            url: "/fixtures",
             params: {
               pageSize,
               page: pageParam,

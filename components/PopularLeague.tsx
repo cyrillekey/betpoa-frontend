@@ -55,7 +55,7 @@ const PopularLeagues = () => {
                     <h3>{a?.name}</h3>
                     <small>{a?.country}</small>
                   </div>
-                  <span className="league__number">29</span>
+                  <span className="league__number">{a?.matches ?? 0}</span>
                 </div>
               ))}
         </div>
