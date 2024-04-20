@@ -3,13 +3,13 @@ import Image from "next/image";
 import {
     Button,
   FormControl,
-  FormErrorMessage,
   HStack,
   Icon,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -60,6 +60,8 @@ const UserLoggedinBar = () => {
   );
 };
 const UserLoginBar = () => {
+    
+    const {isOpen,onToggle} =useDisclosure()
   return (
     <Formik
       initialValues={{ phone: "", password: "" }}
@@ -67,7 +69,9 @@ const UserLoginBar = () => {
         phone: Yup.string().required(),
         password: Yup.string().required(),
       })}
-      onSubmit={(values) => {}}
+      onSubmit={(values) => {
+        
+      }}
     >
       {({ values, touched, errors }) => (
         <Form noValidate>
@@ -89,30 +93,27 @@ const UserLoginBar = () => {
                   as={Input}
                   type="tel"
                   placeholder="Mobile"
-                  pl="8"
-                  borderRight={"none"}
+                  pl="8"                  
                 />
-              </InputGroup>
-              <FormErrorMessage>{errors?.phone}</FormErrorMessage>
+              </InputGroup>              
             </FormControl>
             <FormControl
-              width="80%"
+              width="90%"
               isRequired
-              isInvalid={touched?.phone && !!errors?.phone}
+              isInvalid={touched?.phone && !!errors?.phone}              
             >
-              <InputGroup>
+              <InputGroup >
                 <InputLeftElement>
                   <LockIcon mb="2" />
                 </InputLeftElement>
-                <Field size="sm" name="password" as={Input} type="password" />
-                <InputRightElement>
-                <Icon as={LuEye} mb="2" />
+                <Field size="sm" name="password" as={Input} type={"password"} pl="8" />
+                <InputRightElement onClick={onToggle} borderRadius={"0"}>
+                <Icon as={isOpen ? LuEye : LuEyeOff } mb="2" borderRadius={"0"} />
                 </InputRightElement>
               </InputGroup>
-              <FormErrorMessage>{errors?.phone}</FormErrorMessage>
             </FormControl>
             <FormControl>
-                <Button size={"sm"} borderRadius={"0"} isLoading={true} loadingText="Verifying">Login</Button>
+                <Button size={"sm"} backgroundColor={"#613cea"} color={"white"} type="submit" width={"60%"} borderRadius={"0"} isLoading={false} loadingText="Verifying">Login</Button>
             </FormControl>
           </HStack>
         </Form>
