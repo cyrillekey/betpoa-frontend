@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-axios.defaults.baseURL = process.env.NEXT_API_BASE_URL!
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL!
+console.log(process.env)
 export const useGetLeaguesQuery = ({
   pageSize = 5,
   page = 1,
