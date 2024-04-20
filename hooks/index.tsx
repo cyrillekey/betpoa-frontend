@@ -55,7 +55,7 @@ export const useGetFixturesQuery = ({
         
         return lastPage.length > 0 ? (pages.length - 1) + 1 : undefined;
       },
-    queryKey: ["getFixtures"],
+    queryKey: ["getFixtures",{status,country,fromDate,toDate}],
     queryFn: ({ pageParam }) =>
       {       
         return axios

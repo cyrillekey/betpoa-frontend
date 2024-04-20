@@ -1,7 +1,7 @@
 "use client";
 import { useGetFixturesQuery } from "@/hooks";
 import { Image } from "@chakra-ui/next-js";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
 import { useBettingStore } from "@/state/betting.state";
@@ -219,13 +219,16 @@ const BetLineLoading = () => {
   );
 };
 const FeaturedMatches = () => {
+  const [tab,setTab] = useState<'INPLAY' | 'COMPLETED' | 'FINISHED' | 'UPCOMING' | undefined>()
   const {
     data: fixturesResponse,
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
+    isFetching
   } = useGetFixturesQuery({
     pageSize: 10,
+    status: tab
   });
   const observerTarget = useRef(null);
   useEffect(() => {
@@ -248,6 +251,7 @@ const FeaturedMatches = () => {
   }, [observerTarget]);
 
   const fixtures = fixturesResponse?.pages.flat() ?? [];
+  
   return (
     <Fragment>
       <section className="matches">
@@ -269,16 +273,16 @@ const FeaturedMatches = () => {
           <div className="card__header matches__nav">
             <ul className="nav">
               <li className="nav-item">
-                <a className="nav-link active">All matches</a>
+                <a className={`nav-link ${tab == undefined && 'active'}`} onClick={()=>setTab(undefined)}>All matches</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Live Play</a>
+                <a className={`nav-link ${tab == "INPLAY" && 'active'}`} onClick={()=>setTab('INPLAY')}>Live Play</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Completed</a>
+                <a className={`nav-link ${tab == "COMPLETED" && 'active'}`} onClick={()=>setTab('COMPLETED')}>Completed</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Scheduled</a>
+                <a className={`nav-link ${tab == "UPCOMING" && 'active'}`} onClick={()=>setTab('UPCOMING')}>Scheduled</a>
               </li>
             </ul>
             <a className="matches__agenda btn--icon">
@@ -309,7 +313,7 @@ const FeaturedMatches = () => {
                 </tr>
               </thead>
               <tbody>
-                {isLoading
+                {isLoading || isFetching
                   ? new Array(14)
                       .fill("")
                       .map((a) => <BetLineLoading key={v4()} />)
