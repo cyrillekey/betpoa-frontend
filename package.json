@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "npx openapi-rq -i ./spec.json -c axios"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -31,6 +32,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@7nohe/openapi-react-query-codegen": "^1.1.0",
     "@tanstack/eslint-plugin-query": "^5.28.11",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
@@ -40,6 +42,7 @@
     "@types/uuid": "^9.0.8",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
+    "orval": "^6.27.1",
     "typescript": "^5"
   }
 }

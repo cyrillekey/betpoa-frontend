@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { GetFixturesFeatured200 } from "./generated/index.schemas";
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL!
 
 export const useGetLeaguesQuery = ({
@@ -61,7 +62,7 @@ export const useGetFixturesQuery = ({
         return axios
           .request({
             method: "GET",
-            url: "/fixtures",
+            url: "/fixtures/betting",
             params: {
               pageSize,
               page: pageParam,
@@ -77,5 +78,23 @@ export const useGetFixturesQuery = ({
             return err?.response?.data?.data ?? [];
           });
       },
+  });
+};
+export const useGetFeaturedMatchQuery = () => {
+  return useQuery<GetFixturesFeatured200>({
+    queryKey: ["getFeaturedMatch"],
+    queryFn: () =>
+      axios
+        .request({
+          method: "GET",
+          url: "/fixtures/featured",          
+        })
+        .then((resp) => {          
+          return resp?.data;
+        })
+        .catch((err) => {
+          console.log(err?.response?.data)
+          return err?.response?.data ?? {success: false,message:"Failed"};
+        }),
   });
 };

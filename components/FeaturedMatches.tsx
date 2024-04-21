@@ -224,8 +224,7 @@ const FeaturedMatches = () => {
     data: fixturesResponse,
     isLoading,
     fetchNextPage,
-    isFetchingNextPage,
-    isFetching
+    isFetchingNextPage,    
   } = useGetFixturesQuery({
     pageSize: 10,
     status: tab
@@ -313,7 +312,7 @@ const FeaturedMatches = () => {
                 </tr>
               </thead>
               <tbody>
-                {isLoading || isFetching
+                {isLoading
                   ? new Array(14)
                       .fill("")
                       .map((a) => <BetLineLoading key={v4()} />)
