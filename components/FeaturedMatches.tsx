@@ -219,7 +219,7 @@ const BetLineLoading = () => {
   );
 };
 const FeaturedMatches = () => {
-  const [tab,setTab] = useState<'INPLAY' | 'COMPLETED' | 'FINISHED' | 'UPCOMING' | undefined>()
+  const [tab,setTab] = useState<'INPLAY' | 'FINISHED' | 'UPCOMMING' | undefined>()
   const {
     data: fixturesResponse,
     isLoading,
@@ -278,10 +278,10 @@ const FeaturedMatches = () => {
                 <a className={`nav-link ${tab == "INPLAY" && 'active'}`} onClick={()=>setTab('INPLAY')}>Live Play</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${tab == "COMPLETED" && 'active'}`} onClick={()=>setTab('COMPLETED')}>Completed</a>
+                <a className={`nav-link ${tab == "FINISHED" && 'active'}`} onClick={()=>setTab('FINISHED')}>Completed</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${tab == "UPCOMING" && 'active'}`} onClick={()=>setTab('UPCOMING')}>Scheduled</a>
+                <a className={`nav-link ${tab == "UPCOMMING" && 'active'}`} onClick={()=>setTab('UPCOMMING')}>Scheduled</a>
               </li>
             </ul>
             <a className="matches__agenda btn--icon">
