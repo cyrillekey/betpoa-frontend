@@ -8,14 +8,16 @@ export const useGetLeaguesQuery = ({
   page = 1,
   country,
   year,
+  featured
 }: {
   pageSize?: number;
   page?: number;
   country?: string;
   year?: number;
+  featured?: boolean
 }) => {
   return useQuery({
-    queryKey: ["getLeagues"],
+    queryKey: ["getLeagues",{pageSize,page,country,year,featured}],
     queryFn: () =>
       axios
         .request({
@@ -26,6 +28,7 @@ export const useGetLeaguesQuery = ({
             country,
             page,
             year,
+            featured
           },
         })
         .then((resp) => {

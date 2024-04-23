@@ -20,7 +20,7 @@ const FixtureLoading = () => (
 const PopularLeagues = () => {
   const { data: leaguesResponse, isLoading } = useGetLeaguesQuery({
     pageSize: 6,
-    country: "England",
+    featured: true
   });
   const leagues = leaguesResponse ?? [];
 
