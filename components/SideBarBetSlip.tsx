@@ -3,14 +3,13 @@ import { useAppStateStore } from "@/state/app.state";
 import { useBettingStore } from "@/state/betting.state";
 import { Fragment } from "react";
 import { Formik, Form, Field } from "formik";
-import { FormControl, FormErrorMessage, Input } from "@chakra-ui/react";
+
 import * as Yup from "yup";
 import { currencyFormat } from "@/utils";
 export const SideBarBetSlip = () => {
   const { toggleBetSlip, betSlipColapsed } = useAppStateStore();
   const { odds, resetStore, removeOdd } = useBettingStore();
-    const totalOdds = odds
-        .reduce((total, current) => total * current?.odd, 1);
+  const totalOdds = odds.reduce((total, current) => total * current?.odd, 1);
   return (
     <Fragment>
       <div
@@ -149,7 +148,7 @@ export const SideBarBetSlip = () => {
                         5$
                       </label>
                       <label className="sr-only">Any amount</label>
-                      <FormControl
+                      {/* <FormControl
                         isRequired
                         isInvalid={touched?.amount && !!errors?.amount}
                       >
@@ -160,7 +159,7 @@ export const SideBarBetSlip = () => {
                           name="amount"
                         />
                         <FormErrorMessage>{errors?.amount}</FormErrorMessage>
-                      </FormControl>
+                      </FormControl> */}
                     </div>
                     <div className="invoice__payment__options">
                       <h4 className="invoice__payment__options__title">
@@ -202,8 +201,7 @@ export const SideBarBetSlip = () => {
                           Total Rate
                         </h4>
                         <span className="tag rating rating--primary">
-                          {totalOdds
-                            .toFixed(2)}
+                          {totalOdds.toFixed(2)}
                         </span>
                       </div>
                       <div className="invoice__payment__recap__winnings">
@@ -211,7 +209,14 @@ export const SideBarBetSlip = () => {
                           Possible winnings
                         </h4>
                         <p className="invoice__payment__recap__winnings__amount">
-                          {currencyFormat({amount:totalOdds * (isNaN(values?.amount) || values.amount < 1 ? 0 : values.amount),currency:'KES'}) }
+                          {currencyFormat({
+                            amount:
+                              totalOdds *
+                              (isNaN(values?.amount) || values.amount < 1
+                                ? 0
+                                : values.amount),
+                            currency: "KES",
+                          })}
                         </p>
                       </div>
                     </div>

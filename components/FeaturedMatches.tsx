@@ -1,6 +1,6 @@
 "use client";
 import { useGetFixturesQuery } from "@/hooks";
-import { Image } from "@chakra-ui/next-js";
+import { Image } from "@chakra-ui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
@@ -50,33 +50,27 @@ const BetLine = ({ a }: { a: any }) => {
         <div className="score score--vertical">
           <div className="score__team score__team--vertical">
             <span>{a?.homeTeam?.name}</span>
-            <Image
-              alt=""
-              src={{
-                width: 100,
-                height: 100,
-                src: a?.homeTeam?.logo,
-              }}
-            />
+            <Image alt="" height={100} width={100} src={a?.homeTeam?.logo} />
           </div>
           <p className="score__result score__result--vertical score__result--not-started">
-            <span className="score__goals">              
-              {a?.result?.htHomeGoals !=null && a?.result?.homeGoals == null ? a?.result?.htHomeGoals : a?.result?.homeGoals != null  ? a?.result?.homeGoals  : "-"}
+            <span className="score__goals">
+              {a?.result?.htHomeGoals != null && a?.result?.homeGoals == null
+                ? a?.result?.htHomeGoals
+                : a?.result?.homeGoals != null
+                ? a?.result?.homeGoals
+                : "-"}
             </span>
             <span className="score__separator">:</span>
             <span className="score__goals">
-            {a?.result?.htAwayGoals != null && a?.result?.awayGoals == null ? a?.result?.htAwayGoals : a?.result?.awayGoals != null ? a?.result?.awayGoals  : "-"}
+              {a?.result?.htAwayGoals != null && a?.result?.awayGoals == null
+                ? a?.result?.htAwayGoals
+                : a?.result?.awayGoals != null
+                ? a?.result?.awayGoals
+                : "-"}
             </span>
           </p>
           <div className="score__team score__team--vertical">
-            <Image
-              alt=""
-              src={{
-                width: 48,
-                height: 48,
-                src: a?.awayTeam?.logo,
-              }}
-            />
+            <Image alt="" src={a?.awayTeam?.logo} />
             <span>{a?.awayTeam?.name}</span>
           </div>
         </div>
@@ -90,11 +84,11 @@ const BetLine = ({ a }: { a: any }) => {
             addOdd({
               fixtureId: a?.id,
               oddId: homeOdd?.id,
-              homeTeam: a?.homeTeam?.name,              
+              homeTeam: a?.homeTeam?.name,
               awayTeam: a?.awayTeam?.name,
-              market: 'WINNER',
+              market: "WINNER",
               odd: homeOdd?.odd,
-              pick: a?.homeTeam?.name
+              pick: a?.homeTeam?.name,
             })
           }
         >
@@ -112,9 +106,9 @@ const BetLine = ({ a }: { a: any }) => {
               oddId: drawOdd?.id,
               homeTeam: a?.homeTeam?.name,
               awayTeam: a?.awayTeam?.name,
-              market: 'WINNER',
+              market: "WINNER",
               odd: drawOdd?.odd,
-              pick: 'DRAW',
+              pick: "DRAW",
             })
           }
         >
@@ -132,7 +126,7 @@ const BetLine = ({ a }: { a: any }) => {
               oddId: awayOdd?.id,
               homeTeam: a?.homeTeam?.name,
               awayTeam: a?.awayTeam?.name,
-              market: 'WINNER',
+              market: "WINNER",
               odd: awayOdd?.odd,
               pick: a?.awayTeam?.name,
             })
@@ -170,14 +164,7 @@ const BetLineLoading = () => {
         <div className="score score--vertical">
           <div className="score__team score__team--vertical">
             <span>Home</span>
-            <Image
-              alt=""
-              src={{
-                width: 100,
-                height: 100,
-                src: "https://placehold.co/600x400.png",
-              }}
-            />
+            <Image alt="" src={"https://placehold.co/600x400.png"} />
           </div>
           <p className="score__result score__result--vertical score__result--not-started">
             <span className="score__goals">-</span>
@@ -185,14 +172,7 @@ const BetLineLoading = () => {
             <span className="score__goals">-</span>
           </p>
           <div className="score__team score__team--vertical">
-            <Image
-              alt=""
-              src={{
-                width: 48,
-                height: 48,
-                src: "https://placehold.co/600x400.png",
-              }}
-            />
+            <Image alt="" src={"https://placehold.co/600x400.png"} />
             <span>Away</span>
           </div>
         </div>
@@ -219,15 +199,17 @@ const BetLineLoading = () => {
   );
 };
 const FeaturedMatches = () => {
-  const [tab,setTab] = useState<'INPLAY' | 'FINISHED' | 'UPCOMMING' | undefined>()
+  const [tab, setTab] = useState<
+    "INPLAY" | "FINISHED" | "UPCOMMING" | undefined
+  >();
   const {
     data: fixturesResponse,
     isLoading,
     fetchNextPage,
-    isFetchingNextPage,    
+    isFetchingNextPage,
   } = useGetFixturesQuery({
     pageSize: 10,
-    status: tab
+    status: tab,
   });
   const observerTarget = useRef(null);
   useEffect(() => {
@@ -250,7 +232,7 @@ const FeaturedMatches = () => {
   }, [observerTarget]);
 
   const fixtures = fixturesResponse?.pages.flat() ?? [];
-  
+
   return (
     <Fragment>
       <section className="matches">
@@ -272,16 +254,36 @@ const FeaturedMatches = () => {
           <div className="card__header matches__nav">
             <ul className="nav">
               <li className="nav-item">
-                <a className={`nav-link ${tab == undefined && 'active'}`} onClick={()=>setTab(undefined)}>All matches</a>
+                <a
+                  className={`nav-link ${tab == undefined && "active"}`}
+                  onClick={() => setTab(undefined)}
+                >
+                  All matches
+                </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${tab == "INPLAY" && 'active'}`} onClick={()=>setTab('INPLAY')}>Live Play</a>
+                <a
+                  className={`nav-link ${tab == "INPLAY" && "active"}`}
+                  onClick={() => setTab("INPLAY")}
+                >
+                  Live Play
+                </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${tab == "FINISHED" && 'active'}`} onClick={()=>setTab('FINISHED')}>Completed</a>
+                <a
+                  className={`nav-link ${tab == "FINISHED" && "active"}`}
+                  onClick={() => setTab("FINISHED")}
+                >
+                  Completed
+                </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${tab == "UPCOMMING" && 'active'}`} onClick={()=>setTab('UPCOMMING')}>Scheduled</a>
+                <a
+                  className={`nav-link ${tab == "UPCOMMING" && "active"}`}
+                  onClick={() => setTab("UPCOMMING")}
+                >
+                  Scheduled
+                </a>
               </li>
             </ul>
             <a className="matches__agenda btn--icon">
@@ -325,7 +327,11 @@ const FeaturedMatches = () => {
                     .map((a) => <BetLineLoading key={v4()} />)
                 ) : (
                   <tr ref={observerTarget}>
-                    <td colSpan={6} style={{ textAlign: "center" }} onClick={()=>fetchNextPage()}>
+                    <td
+                      colSpan={6}
+                      style={{ textAlign: "center" }}
+                      onClick={() => fetchNextPage()}
+                    >
                       Fetch More
                     </td>
                   </tr>

@@ -1,22 +1,21 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import {
-    Button,
-  FormControl,
   HStack,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
   useDisclosure,
+  Field as FormControl,
+  InputGroup,
+  Input,
+  Box,
+  Button,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { PhoneIcon, LockIcon } from "@chakra-ui/icons";
-import { LuEye,LuEyeOff } from "react-icons/lu";
 
-
+import { LuEye, LuEyeOff } from "react-icons/lu";
+import { BiLock } from "react-icons/bi";
+import { useSignInMutation } from "@/hooks/mutations";
+import { toaster } from "./ui/toaster";
 
 const UserAccountBar = () => {
   return (
@@ -62,61 +61,68 @@ const UserLoggedinBar = () => {
   );
 };
 const UserLoginBar = () => {
-    
-    const {isOpen,onToggle} =useDisclosure()
+  const { open, onToggle } = useDisclosure();
+  const { isPending, mutateAsync: signIn } = useSignInMutation();
+
   return (
     <Formik
       initialValues={{ phone: "", password: "" }}
       validationSchema={Yup.object().shape({
         phone: Yup.string().required(),
-        password: Yup.string().required(),
+        password: Yup.string().required().min(6),
       })}
-      onSubmit={(values) => {
-        
-      }}
+      onSubmit={(values) =>
+        signIn({ email: values.phone, password: values.phone }).then((resp) => {
+          if (resp?.success) {
+          } else {
+            toaster.create({
+              title: "Error",
+              type: "error",
+              description: resp?.message,
+              closable: true
+            });
+          }
+        })
+      }
     >
       {({ values, touched, errors }) => (
         <Form noValidate>
-          <HStack spacing={0}>
-            <FormControl            
-              width="100%"
-              isRequired
-              isInvalid={touched?.phone && !!errors?.phone}
-              
+          <HStack gap={1}>
+            <FormControl.Root
+              required
+              disabled={isPending}
+              invalid={touched.phone && !!errors.phone}
             >
-              <InputGroup>
-                <InputLeftElement                  
-                >                    
-                  <PhoneIcon color={"black"} fontSize={"small"} mb="2"  alignContent={"center"} justifySelf={"center"} alignSelf={"center"} />
-                </InputLeftElement>
+              <Field
+                as={Input}
+                name="phone"
+                size="xs"
+                placeholder="Email/Phone"
+              />
+            </FormControl.Root>
+            <FormControl.Root
+              required
+              invalid={touched.password && !!errors.password}
+              disabled={isPending}
+            >
+              <InputGroup
+                endElementProps={{ onClick: onToggle }}
+                endElement={open ? <LuEyeOff /> : <LuEye />}
+              >
                 <Field
-                  size="sm"
-                  name="phone"
                   as={Input}
-                  type="tel"
-                  placeholder="Mobile"
-                  pl="8"                  
+                  name="password"
+                  size="xs"
+                  type={open ? "text" : "password"}
+                  placeholder="********"
                 />
-              </InputGroup>              
-            </FormControl>
-            <FormControl
-              width="90%"
-              isRequired
-              isInvalid={touched?.phone && !!errors?.phone}              
-            >
-              <InputGroup >
-                <InputLeftElement>
-                  <LockIcon mb="2" />
-                </InputLeftElement>
-                <Field size="sm" name="password" as={Input} type={"password"} pl="8" />
-                <InputRightElement onClick={onToggle} borderRadius={"0"}>
-                <Icon as={isOpen ? LuEye : LuEyeOff } mb="2" borderRadius={"0"} />
-                </InputRightElement>
               </InputGroup>
-            </FormControl>
-            <FormControl>
-                <Button size={"sm"} backgroundColor={"#613cea"} color={"white"} type="submit" width={"60%"} borderRadius={"0"} isLoading={false} loadingText="Verifying">Login</Button>
-            </FormControl>
+            </FormControl.Root>
+            <Box w="0.5" />
+            <Button size={"xs"} type="submit" loading={isPending}>
+              Login
+            </Button>
+            <Box w="2" />
           </HStack>
         </Form>
       )}

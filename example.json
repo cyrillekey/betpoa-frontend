@@ -1,0 +1,30 @@
+{
+    "success": true,
+    "size": 1,
+    "totalHits": 1,
+    "hitsPerPage": 10,
+    "page": 1,
+    "totalPages": 1,
+    "timeMs": 5,
+    "data": [
+        {
+            "title": "2025 Little League World Series: Softball and baseball results, schedules and more",
+            "url": "https://www.espn.com/mlb/story/_/id/45894825/2025-little-league-world-series-baseball-softball-schedule-results-channels-highlights",
+            "excerpt": "We have your one-stop shop for everything to know about the 2025 Little League World Series.",
+            "thumbnail": "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2025%2F0804%2Fr1527568_1296x729_16%2D9.jpg",
+            "language": "en",
+            "paywall": false,
+            "contentLength": 6977,
+            "date": "2025-08-04T11:00:00+00:00",
+            "authors": [
+                "ESPN"
+            ],
+            "keywords": [],
+            "publisher": {
+                "name": "ESPN",
+                "url": "https://www.espn.com",
+                "favicon": "https://staticns.bonai.io/publisher/l17qcpEgEqxmX3rj7WcUA1836KiiSZhhzDoRwd1TaZY"
+            }
+        }
+    ]
+}
