@@ -15,6 +15,7 @@ import {
   HStack,
   Image,
   Link,
+  chakra,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Toaster } from "@/components/ui/toaster";
@@ -33,7 +34,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Toaster />
-          <SimpleGrid columns={7}>
+          <SimpleGrid columns={{ base: 1, lg: 7 }} w="full">
             <GridItem colSpan={1}>
               <Box
                 position={"fixed"}
@@ -264,7 +265,18 @@ export default function RootLayout({
             </GridItem>
             <GridItem colSpan={{ base: 1, lg: 6 }} w="full">
               <Box h="2" />
-              <header className="nav__top">
+              <chakra.header
+                className="nav__top"
+                display={{ md: "none", base: "inherit" }}
+                px="8"
+                py="6"
+              >
+                <Image src="/vercel.svg" h="6" alt="Logo" />
+              </chakra.header>
+              <chakra.header
+                className="nav__top"
+                display={{ md: "inherit", base: "none" }}
+              >
                 <nav className="nav__top__item main-navigation">
                   <ul className="nav">
                     <li className="nav-item">
@@ -320,11 +332,12 @@ export default function RootLayout({
                 </nav>
 
                 <UserAccountBar />
-              </header>
+              </chakra.header>
               <HStack
                 style={{ width: "100%" }}
                 align={"self-start"}
                 justify={"start"}
+                w="full"
               >
                 <main className="dashboard" style={{ width: "100%" }}>
                   {children}
