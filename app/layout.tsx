@@ -9,7 +9,14 @@ import { usePathname } from "next/navigation";
 import { SideBarBetSlip } from "@/components/SideBarBetSlip";
 import { useAppStateStore } from "@/state/app.state";
 import UserAccountBar from "@/components/UserAccountBar";
-import { Box, GridItem, HStack, Link, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  GridItem,
+  HStack,
+  Image,
+  Link,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,25 +33,17 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Toaster />
-          <SimpleGrid columns={6}>
+          <SimpleGrid columns={7}>
             <GridItem colSpan={1}>
               <Box
+                position={"fixed"}
                 className={`nav__left ${sideBarColapsed ? "opened" : ""}`}
                 display={{ base: "none", lg: "inherit" }}
               >
                 <div className="nav__left__item nav__left__toggle">
-                  <button
-                    className="btn btn--icon btn--no-bg"
-                    onClick={toggleSideBar}
-                  >
-                    <span className="sr-only">Toggle navbar</span>
-                    <svg viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M19,13H3V11H19L15,7L16.4,5.6L22.8,12L16.4,18.4L15,17L19,13M3,6H13V8H3V6M13,16V18H3V16H13Z"
-                      />
-                    </svg>
-                  </button>
+                  <HStack py="2.5">
+                    <Image src="/vercel.svg" h="6" alt="Logo" />
+                  </HStack>
                 </div>
                 <nav
                   className={`secondary-navigation ${
@@ -263,7 +262,8 @@ export default function RootLayout({
                 </button>
               </Box>
             </GridItem>
-            <GridItem colSpan={5} w="full">
+            <GridItem colSpan={{ base: 1, lg: 6 }} w="full">
+              <Box h="2" />
               <header className="nav__top">
                 <nav className="nav__top__item main-navigation">
                   <ul className="nav">
@@ -321,7 +321,11 @@ export default function RootLayout({
 
                 <UserAccountBar />
               </header>
-              <HStack w="full" align={"self-start"} justify={"start"}>
+              <HStack
+                style={{ width: "100%" }}
+                align={"self-start"}
+                justify={"start"}
+              >
                 <main className="dashboard" style={{ width: "100%" }}>
                   {children}
                 </main>

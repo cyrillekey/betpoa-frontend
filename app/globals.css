@@ -244,11 +244,6 @@ body {
 }
 
 .dashboard {
-  display: grid;
-  grid-area: main;
-  grid-template-columns: auto 1fr;
-  grid-gap: 2rem;
-  grid-template-areas: "col-left col-right";
   padding: 2rem;
 }
 
@@ -935,11 +930,10 @@ input[type=checkbox]:checked+.checkbox::after {
 }
 
 .invoice {
-  grid-area: invoice;
   background-color: #f3f5f9;
   font-size: 0.875rem;
-  width: 23rem;
-  overflow: hidden;
+
+
   transition: width 0.3s;
 }
 
