@@ -1,23 +1,24 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { GetFixturesFeatured200 } from "./generated/index.schemas";
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL!
+import { Blog } from "./schema";
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export const useGetLeaguesQuery = ({
   pageSize = 5,
   page = 1,
   country,
   year,
-  featured
+  featured,
 }: {
   pageSize?: number;
   page?: number;
   country?: string;
   year?: number;
-  featured?: boolean
+  featured?: boolean;
 }) => {
   return useQuery({
-    queryKey: ["getLeagues",{pageSize,page,country,year,featured}],
+    queryKey: ["getLeagues", { pageSize, page, country, year, featured }],
     queryFn: () =>
       axios
         .request({
@@ -28,7 +29,7 @@ export const useGetLeaguesQuery = ({
             country,
             page,
             year,
-            featured
+            featured,
           },
         })
         .then((resp) => {
@@ -54,33 +55,30 @@ export const useGetFixturesQuery = ({
 }) => {
   return useInfiniteQuery({
     initialPageParam: 0,
-    getNextPageParam: (lastPage: any[], pages) =>
-      {
-        
-        return lastPage.length > 0 ? (pages.length - 1) + 1 : undefined;
-      },
-    queryKey: ["getFixtures",{status,country,fromDate,toDate}],
-    queryFn: ({ pageParam }) =>
-      {       
-        return axios
-          .request({
-            method: "GET",
-            url: "/fixtures/betting",
-            params: {
-              pageSize,
-              page: pageParam,
-              country,
-              status,
-              fromDate,
-              toDate,
-            },
-          })
-          .then((resp) => resp?.data?.data as [])
-          .catch((err) => {
-            console.log(err?.response);
-            return err?.response?.data?.data ?? [];
-          });
-      },
+    getNextPageParam: (lastPage: any[], pages) => {
+      return lastPage.length > 0 ? pages.length - 1 + 1 : undefined;
+    },
+    queryKey: ["getFixtures", { status, country, fromDate, toDate }],
+    queryFn: ({ pageParam }) => {
+      return axios
+        .request({
+          method: "GET",
+          url: "/fixtures/betting",
+          params: {
+            pageSize,
+            page: pageParam,
+            country,
+            status,
+            fromDate,
+            toDate,
+          },
+        })
+        .then((resp) => resp?.data?.data as [])
+        .catch((err) => {
+          console.log(err?.response);
+          return err?.response?.data?.data ?? [];
+        });
+    },
   });
 };
 export const useGetFeaturedMatchQuery = () => {
@@ -90,14 +88,28 @@ export const useGetFeaturedMatchQuery = () => {
       axios
         .request({
           method: "GET",
-          url: "/fixtures/featured",          
+          url: "/fixtures/featured",
         })
-        .then((resp) => {          
+        .then((resp) => {
           return resp?.data;
         })
         .catch((err) => {
-          console.log(err?.response?.data)
-          return err?.response?.data ?? {success: false,message:"Failed"};
+          console.log(err?.response?.data);
+          return err?.response?.data ?? { success: false, message: "Failed" };
         }),
+  });
+};
+
+export const useGetBlogsQuery = () => {
+  return useQuery<Blog[]>({
+    queryKey: ["getAllBlogs"],
+    queryFn: () =>
+      axios
+        .request({ method: "GET", url: "/blog" })
+        .then((resp) => {
+          console.log(resp);
+          return resp.data;
+        })
+        .catch((err: AxiosError) => err.response?.data),
   });
 };

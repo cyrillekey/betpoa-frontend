@@ -1,3 +1,5 @@
+"use client";
+import { useGetBlogsQuery } from "@/hooks";
 import {
   Avatar,
   Box,
@@ -10,11 +12,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Fragment } from "react";
+import { v4 } from "uuid";
 
 const NewsPage = () => {
+  const { data: blogs, isPending: fetchingBlogs } = useGetBlogsQuery();
   return (
     <VStack w="full" h="full">
-      <SimpleGrid columns={{ base: 1, xl: 3 }} w="full" h="lg" gap={8}>
+      <SimpleGrid columns={{ base: 1, xl: 3 }} w="full" h="min" gap={8}>
         <GridItem colSpan={{ xl: 2, base: 1 }} w="full">
           <VStack
             w="full"
@@ -22,45 +26,49 @@ const NewsPage = () => {
             px="8"
             h="full"
             borderRadius={"xl"}
-            backgroundImage={
-              "url('https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2025%2F0804%2Fr1527568_1296x729_16%2D9.jpg')"
-            }
+            backgroundImage={`url('${blogs?.at(0)?.urlToImage}')`}
             justify={"end"}
           >
             <Text color={"white"} fontSize={"2xl"} fontWeight={"semibold"}>
-              More Americans Are Playing Sports—Especially This One
+              {blogs?.at(0)?.title}
             </Text>
             <Box h="10" />
           </VStack>
         </GridItem>
         <GridItem colSpan={1} w="full">
-          <HStack w="full" h="36" gap={4}>
-            <Image
-              borderRadius={"lg"}
-              h="36"
-              w="36"
-              src="https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2025%2F0804%2Fr1527568_1296x729_16%2D9.jpg"
-              alt="Blog Image"
-            />
-            <VStack h="full" align={"self-start"}>
-              <HStack>
-                <Avatar.Root size={"2xs"}>
-                  <Avatar.Fallback name="John Doe"></Avatar.Fallback>
-                </Avatar.Root>
-                <Text color={"black"} fontWeight={"semibold"} fontSize={"sm"}>
-                  John Doe
-                </Text>
+          <VStack w="full" gap={4}>
+            {blogs?.slice(1, 5).map((a) => (
+              <HStack w="full" h="36" gap={4} key={v4()}>
+                <Image
+                  borderRadius={"lg"}
+                  h="36"
+                  w="36"
+                  src={a.urlToImage}
+                  alt="Blog Image"
+                />
+                <VStack h="full" align={"self-start"}>
+                  <HStack>
+                    <Avatar.Root size={"2xs"}>
+                      <Avatar.Fallback name="John Doe"></Avatar.Fallback>
+                    </Avatar.Root>
+                    <Text
+                      color={"black"}
+                      fontWeight={"semibold"}
+                      fontSize={"sm"}
+                    >
+                      {a.author}
+                    </Text>
+                  </HStack>
+                  <Text fontWeight={"semibold"} fontSize={"sm"}>
+                    {a.title}
+                  </Text>
+                  <Text fontWeight={"thin"} fontSize={"xs"} color={"black"}>
+                    {a.description}
+                  </Text>
+                </VStack>
               </HStack>
-              <Text fontWeight={"semibold"} fontSize={"sm"}>
-                Sports Illustrated’s Premier League 2025–26 Predictions
-              </Text>
-              <Text fontWeight={"thin"} fontSize={"xs"} color={"black"}>
-                Liverpool’s clash with Bournemouth at Anfield on Friday night
-                will bring to an end the 82-day wait for Premier League action
-                to get back underway.
-              </Text>
-            </VStack>
-          </HStack>
+            ))}
+          </VStack>
         </GridItem>
       </SimpleGrid>
     </VStack>

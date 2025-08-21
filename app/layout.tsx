@@ -9,14 +9,7 @@ import { usePathname } from "next/navigation";
 import { SideBarBetSlip } from "@/components/SideBarBetSlip";
 import { useAppStateStore } from "@/state/app.state";
 import UserAccountBar from "@/components/UserAccountBar";
-import {
-  Box,
-  GridItem,
-  HStack,
-  Link,
-  SimpleGrid,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, GridItem, HStack, Link, SimpleGrid } from "@chakra-ui/react";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
