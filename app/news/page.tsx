@@ -176,6 +176,7 @@ const NewsPage = () => {
                     borderRadius={"lg"}
                     h="36"
                     w="36"
+                    fit={"cover"}
                     src={a.urlToImage}
                     alt="Blog Image"
                   />
@@ -224,35 +225,37 @@ const NewsPage = () => {
       <Box h="4" />
       <SimpleGrid columns={4} w="full" gap={8}>
         {blogs?.slice(5, 9).map((a) => (
-          <VStack h="full" key={v4()} w="full" align={"self-start"} gap={0}>
-            <Image
-              src={a.urlToImage}
-              alt={a.title}
-              h="60"
-              w="full"
-              borderRadius={"xl"}
-            />
-            <Box h="4" />
-            <HStack gap={0}>
-              <Avatar.Root size={"2xs"}>
-                <Avatar.Fallback name={a.source.name} />
-              </Avatar.Root>
-              <Box w="2" />
-              <Text fontWeight={"semibold"} fontSize={"sm"}>
-                {a.source.name}
-              </Text>
-              <Icon as={BsDot} />
-              <Text>{dayjs(a.publishedAt).fromNow()}</Text>
-            </HStack>
-            <Box h="2.5" />
-            <Box minH={"20"}>
-              <Text fontWeight={"semibold"} fontSize={"md"}>
-                {a.title}
-              </Text>
-            </Box>
-            <Box h="2" />
-            <Text fontSize={"sm"}>{a.description}</Text>
-          </VStack>
+          <a href={a.url} target="_blank" key={v4()}>
+            <VStack h="full" w="full" align={"self-start"} gap={0}>
+              <Image
+                src={a.urlToImage}
+                alt={a.title}
+                h="60"
+                w="full"
+                borderRadius={"xl"}
+              />
+              <Box h="4" />
+              <HStack gap={0}>
+                <Avatar.Root size={"2xs"}>
+                  <Avatar.Fallback name={a.source.name} />
+                </Avatar.Root>
+                <Box w="2" />
+                <Text fontWeight={"semibold"} fontSize={"sm"}>
+                  {a.source.name}
+                </Text>
+                <Icon as={BsDot} />
+                <Text>{dayjs(a.publishedAt).fromNow()}</Text>
+              </HStack>
+              <Box h="2.5" />
+              <Box minH={"20"}>
+                <Text fontWeight={"semibold"} fontSize={"md"}>
+                  {a.title}
+                </Text>
+              </Box>
+              <Box h="2" />
+              <Text fontSize={"sm"}>{a.description}</Text>
+            </VStack>
+          </a>
         ))}
       </SimpleGrid>
     </VStack>
